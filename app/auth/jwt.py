@@ -1,5 +1,5 @@
 import datetime
-from flask import current_app
+from flask import current_app, g
 from app import helpers, models
 from flask_restful_swagger_2 import swagger, Schema
 
@@ -29,6 +29,8 @@ def set_jwt_handlers(jwt):
         user = models.User.query.filter_by(username=username).first()
 
         if user and helpers.verify_password(password, user.password):
+            print(username)
+            g.user = user
             return user
         return None
 

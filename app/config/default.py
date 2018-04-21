@@ -35,6 +35,14 @@ class Config:
     FLASKY_MAIL_SENDER = os.environ.get('MAIL_USERNAME')
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 
+    # 七牛云配置
+    QINIU_ACCESS_KEY = 'c5QClH08302zJVBGKw8KCHJ0MZ2wqnIJgRsLHNhA'
+    QINIU_SECRET_KEY = '59sRtJWdiOE727BMMpnZXN2uroHsHMD6t7UcB37n'
+    QINIU_BUCKET_NAME = 'iridespics'
+    QINIU_DOMAIN = 'http://p7fayt0os.bkt.clouddn.com/'
+    # UPLOAD_FOLDER = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'uploads'
+    # MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+
     @staticmethod
     def init_app(app):
         pass

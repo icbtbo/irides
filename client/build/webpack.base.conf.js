@@ -2,12 +2,20 @@ var path = require("path");
 var utils = require("./utils");
 var config = require("../config");
 var vueLoaderConfig = require("./vue-loader.conf");
+var webpack = require("webpack");
 
 function resolve(dir) {
   return path.join(__dirname, "..", dir);
 }
 
 module.exports = {
+  // plugins: [// 3. 配置全局使用 jquery
+  //   new webpack.ProvidePlugin({
+  //   $: "jquery",
+  //   jQuery: "jquery",
+  //   jquery: "jquery",
+  //   "window.jQuery": "jquery"
+  // })],
   entry: {
     app: "./client/src/main.js"
   },
@@ -39,8 +47,11 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: "babel-loader",
-        include: [resolve("src"), resolve("test")]
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015']
+        },
+        include: [resolve('src'), resolve('test')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

@@ -23,7 +23,7 @@ from app import InitDataGenerator
 from . import blueprint as main
 from flask import render_template
 
-@main.route('/')
+@main.route('/', methods=['GET','POST'])
 def index():
     return render_template('index.html')
 

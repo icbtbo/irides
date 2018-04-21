@@ -1,9 +1,9 @@
 <template>
     <div>
+        <Model />
         <Header />
         <el-container>
           <el-main>
-            content
           </el-main>
         </el-container>
     </div>
@@ -11,8 +11,10 @@
 
 <script>
 import Header from "../components/Header.vue";
+import Model from "../components/Model.vue";
+import alert from 'vue-strap/src/alert';
 export default {
-  components: { Header },
+  components: { Header, alert, Model},
   data: function() {
     return {};
   }
@@ -21,9 +23,9 @@ export default {
 
 <style scoped>
 .el-header {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 .el-main {
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 </style>

@@ -4,6 +4,8 @@ import App from "./App";
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import VueRouter from "vue-router";
+import alert from 'vue-strap/src/alert'
+import $ from 'jquery'
 //import store from "./vuex/store";
 //import Vuex from "vuex";
 //import routes from './routes'
@@ -22,6 +24,6 @@ new Vue({
   el: '#app',
   router,
   //store,
-  //components: { App }
+  // components: { alert },
   render: h => h(App)
 });

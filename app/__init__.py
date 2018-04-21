@@ -1,6 +1,5 @@
 import flask
 from flask_restful_swagger_2 import get_swagger_blueprint
-
 from app.auth.jwt import UserLoginSchema
 from app.models import InitDataGenerator
 from . import extensions, config
