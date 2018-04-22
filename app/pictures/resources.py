@@ -1,4 +1,5 @@
 import os
+import werkzeug
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from flask import request, current_app, g
@@ -15,6 +16,15 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+def post_put_parser():
+    """Request parser for HTTP POST or PUT.
+    :returns: flask_restful.reqparse.RequestParser object
+    """
+    parse = reqparse.RequestParser()
+    parse.add_argument(
+        'file', type=werkzeug.datastructures.FileStorage, location='files', required=True)
+    return parse
 
 class PicturesAPI(Resource):
     '''
@@ -60,7 +70,9 @@ class UploadPicAPI(Resource):
     @helpers.standardize_api_response
     def post(self):
         """HTTP Post, Upload picture"""
-        file = request.files['file']       
+        parse = post_put_parser()
+        args = parse.parse_args()        
+        file = args['file']     
         filestream = file.read()
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)

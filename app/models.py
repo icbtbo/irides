@@ -42,7 +42,7 @@ relation = db.Table('tag_pic_relation',
 class Picture(db.Model):
     __tablename__ = 'pictures'
     id = db.Column(db.Integer, primary_key=True)
-    despriction = db.Column(db.String(5000), unique=True)
+    despriction = db.Column(db.String(5000))
     address = db.Column(db.String(200), unique=True)
     userId = db.Column(db.Integer, db.ForeignKey('user.id'))
     tags = db.relationship(

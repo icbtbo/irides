@@ -56,7 +56,7 @@ class UsersAPI(Resource):
         responses={
             '200': SwgHelper.Response(description="成功")
         }))
-    @jwt_required()
+    # @jwt_required()
     @helpers.standardize_api_response
     def post(self):
         """HTTP POST. Create an user.

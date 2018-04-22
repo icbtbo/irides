@@ -14,9 +14,9 @@
                 </form>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">上传图片</a></li>
+                <li><a data-toggle="modal" href="#UploadpicModal">上传图片</a></li>
                 <li><a  data-toggle="modal" href="#myModal">登陆</a></li>
-                <li><a href="#">注册</a></li>
+                <li><a data-toggle="modal" href="#LogoutModal">注册</a></li>
                 <!-- <li class="dropdown navbar-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         account

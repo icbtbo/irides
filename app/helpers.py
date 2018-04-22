@@ -2,6 +2,7 @@ import collections
 import functools
 import json
 import flask
+from flask import Response
 from passlib import hash
 from flask_restful_swagger_2 import Api
 from flask_jwt import JWTError
@@ -125,8 +126,13 @@ def standardize_api_response(function):
             ('data', '')
         )
 
-        return json.dumps(collections.OrderedDict([
-            status_code, description, data])), status_code[-1]
+        format = json.dumps(collections.OrderedDict([
+            status_code, description, data]))
+        return Response(
+            response=format,
+            mimetype="application/json"
+
+        )
 
     return make_response
 
