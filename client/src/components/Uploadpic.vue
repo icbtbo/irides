@@ -36,9 +36,9 @@ $(document).ready(function(){
             headers:{
                 'Authorization':'Bearer' + ' ' + $.cookie('token')
             },
-            contentType: false,
             cache:false,
-            processData:false,
+            contentType: false, // 这两句一定要加上，否则数据会被序列化，
+            processData:false,  // 而导致后端不能识别
         }).done(function(res){
             console.log('success');
             $("#UploadpicModal").modal("hide")

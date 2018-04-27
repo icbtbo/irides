@@ -2,15 +2,15 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid"> 
         <div class="navbar-header">
-            <a class="navbar-brand title" href="#">irides</a>
+            <a id="homepage" class="navbar-brand title" href="#">irides</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
     		<ul class="nav navbar-nav">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input id="input_tag" type="text" class="form-control" placeholder="Search">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button v-on:click="sendmsgtohome"  type="submit" class="btn btn-default">Submit</button>
                 </form>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -62,12 +62,43 @@ export default {
           this.Islogin1 = false;
           this.Islogin2 = false;
           $.cookie('token', null);
+      },
+      sendmsgtohome:function(){
+          var that = this;
+          $.ajax({
+              async: false,
+              type: 'GET',
+              url: 'http://127.0.0.1:5000/api/picture?SearchKey=' + $("#input_tag").val(),
+              dataType: 'json',
+              contentType: "application/json",
+            //   headers:{
+            //     'Authorization':'Bearer' + ' ' + $.cookie('token')
+            //   },
+              success:function(res){
+                  console.log(res)
+                  var items = [];
+                  var lastIndex = 0;
+                  for(var i=0;i<res.data.length;i++){
+                      items[i]={
+                          src:res.data[i].address,
+                          index: lastIndex++,
+                          width: 100 + ~~(Math.random() * 50),
+                          height: 100 + ~~(Math.random() * 50)
+                      }
+                  }
+                  console.log(items)
+                  that.$emit("pics",items);
+                
+              },
+              error:function(){
+                console.log('error');
+              }
+          });
       }   
   },
   mounted(){
-                          console.log(this.username);
-                    console.log(this.Islogin1);
         var that = this;
+        // 判断是否已登录从而确定是否显示用户名
         if($.cookie('token') != null){
             $.ajax({
                 async: false,
@@ -84,8 +115,6 @@ export default {
                     that.username = res.username;
                     that.Islogin1 = true;
                     that.Islogin2 = true;
-                    console.log(that.username + 'here');
-                    console.log(that.Islogin1);
                 },
                 error:function(){
                     console.log('error');
@@ -93,8 +122,14 @@ export default {
             });
         }
         else{
-            alert('token已失效！');
+            alert('token已失效！请重新登录！');
         }
+        // 点击 irides 图标返回主页
+        $(document).ready(function(){
+            $("#homepage").click(function(){
+                location.reload(true);
+            })
+        });
     }
 };
 </script>

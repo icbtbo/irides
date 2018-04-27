@@ -3,7 +3,7 @@
         <LoginModel />
         <RegModel />
         <Uploadpic />
-        <Header />
+        <Header v-on:pics="showpics" />
         <div id="main">
           <waterfall
           :align="align"
@@ -113,6 +113,10 @@ export default {
               },
               reflowed: function () {
                 this.isBusy = false
+              },
+              showpics: function(data){
+                console.log(data)
+                this.items = data
               }
   },
   mounted(){

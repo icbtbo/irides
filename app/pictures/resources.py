@@ -59,7 +59,7 @@ class PictureAPI(Resource):
     @helpers.standardize_api_response
     def get(self):
         """HTTP GET, Get specific pictures"""
-        pic_tag = request.args.get('searchKey')
+        pic_tag = request.args.get('SearchKey')
         return controllers.get_specific_picture(pic_tag)
 
 
