@@ -23,6 +23,7 @@ def create_app(config_name='default'):
     register_extensions(app)
     register_blueprints(app)
     append_swagger_doc(app)
+    
 
 
     return app

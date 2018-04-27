@@ -1,6 +1,6 @@
 <template>
   <!-- LoginModal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -106,8 +106,11 @@ $(document).ready(function(){
               data: JSON.stringify(data),
               dataType: "json",
               complete: function (res) {
-                  if (res.responseJSON) {
-                      alert(res.responseJSON);
+                  if (res.responseJSON.token) {
+                      console.log(res);
+                      $.cookie('token',res.responseJSON.token,{path:'/'})
+                      $("#LoginModal").modal("hide")
+                      location.reload(true); 
                   }
                   else {
                     alert("服务端发生错误");

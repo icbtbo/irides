@@ -1,6 +1,6 @@
 <template>
-  <!-- LogoutModal -->
-  <div class="modal fade" id="LogoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <!-- RegModal -->
+  <div class="modal fade" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -97,8 +97,10 @@ $(document).ready(function(){
               data: JSON.stringify(data),
               dataType: "json",
               complete: function (res) {
-                  if (res.responseJSON.data) {
-                      alert(res.responseJSON.data);
+                  if (res.responseJSON) {
+                      console.log(res.responseJSON);
+                      alert('注册成功');
+                      $('#RegModal').modal('hide');
                   }
                   else {
                     alert("服务端发生错误");

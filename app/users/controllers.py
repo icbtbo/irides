@@ -1,3 +1,5 @@
+from flask import jsonify
+from flask_jwt import current_user
 from app import helpers
 from app import models
 from app.extensions import db
@@ -21,6 +23,11 @@ def is_an_available_id(user_id):
         return False
     return True
 
+def get_user():
+    username = current_user.username
+    return jsonify({
+        'username':username
+    })
 
 def get_users(username=None):
     """Get all users info. Accepts specify an username.

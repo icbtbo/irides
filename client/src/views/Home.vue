@@ -24,7 +24,10 @@
             :key="item.index"
             move-class="item-move"
           >
-            <div class="item" :style="item.style" :index="item.index"></div>
+            <!-- <div class="item" :style="item.style" :index="item.index"></div> -->
+            <div class="pic">
+              <img :src="item.src" />
+            </div>
           </waterfall-slot>
         </waterfall>
         </div>
@@ -44,13 +47,25 @@ var ItemFactory = (function () {
   var lastIndex = 0
 
   function generateRandomItems (count) {
-    var items = [], i
-    for (i = 0; i < count; i++) {
+    var items = [], i, aitems = []
+    $.ajax({
+      async: false,
+      type: 'GET',
+      url: 'http://127.0.0.1:5000/api/pictures?number=' + lastIndex,
+      dataType: 'json',
+      success:function(res){
+        console.log('success');
+        aitems = res.data;
+        // console.log(aitems);
+      },
+      error:function(){
+        console.log('error');
+      }
+    });
+    for (i = 0; i < aitems.length; i++) {
       items[i] = {
+        src: aitems[i].address,
         index: lastIndex++,
-        style: {
-          background: getRandomColor()
-        },
         width: 100 + ~~(Math.random() * 50),
         height: 100 + ~~(Math.random() * 50)
       }
@@ -58,17 +73,17 @@ var ItemFactory = (function () {
     return items
   }
 
-  function getRandomColor () {
-    var colors = [
-      'rgba(21,174,103,.5)',
-      'rgba(245,163,59,.5)',
-      'rgba(255,230,135,.5)',
-      'rgba(194,217,78,.5)',
-      'rgba(195,123,177,.5)',
-      'rgba(125,205,244,.5)'
-    ]
-    return colors[~~(Math.random() * colors.length)]
-  }
+  // function getRandomColor () {
+  //   var colors = [
+  //     'rgba(21,174,103,.5)',
+  //     'rgba(245,163,59,.5)',
+  //     'rgba(255,230,135,.5)',
+  //     'rgba(194,217,78,.5)',
+  //     'rgba(195,123,177,.5)',
+  //     'rgba(125,205,244,.5)'
+  //   ]
+  //   return colors[~~(Math.random() * colors.length)]
+  // }
 
   return {
     get: generateRandomItems
@@ -80,7 +95,7 @@ export default {
   data: function() {
     return {
       align: 'center',
-      items: ItemFactory.get(100),
+      items: ItemFactory.get(50),
       isBusy: false
     };
   },
@@ -103,7 +118,7 @@ export default {
   mounted(){
     var that = this;
           document.getElementById("main").addEventListener('click', function () {
-            console.log(that)
+            // console.log(that.items)
             that.shuffle()
             // app.$refs.waterfall.$emit('reflow') // manually trigger reflow action
           }, false)
@@ -126,7 +141,21 @@ body {
 	position: relative;
 	top: 50px;
 }
-.item {
+img{
+  height: 100%; width: 100%; object-fit: fill; 
+}
+.pic{
+  height: 100%; width: 100%;
+  padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #ccc;
+
+}
+.vue-waterfall-slot{
+  padding: 15px 0 0 15px !important;
+}
+/* .item {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -143,7 +172,7 @@ body {
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-}
+} */
 .wf-transition {
   transition: opacity .3s ease;
   -webkit-transition: opacity .3s ease;

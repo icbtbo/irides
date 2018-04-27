@@ -30,16 +30,22 @@ $(document).ready(function(){
         formData.append('file', $('#file')[0].files[0]);
         $.ajax({
             type: 'POST',
-            url: '/api/upload_pic',//后端接口
+            url: 'http://127.0.0.1:5000/api/upload_pic',//后端接口
             data: formData,
             dataType: "json",
+            headers:{
+                'Authorization':'Bearer' + ' ' + $.cookie('token')
+            },
             contentType: false,
             cache:false,
             processData:false,
         }).done(function(res){
             console.log('success');
+            $("#UploadpicModal").modal("hide")
         }).fail(function(res){
+            alert('请先登录！');
             console.log('fail');
+            console.log($.cookie('token'))
         });
     });
 });

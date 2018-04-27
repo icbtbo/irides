@@ -56,7 +56,7 @@ class Picture(db.Model):
             'id': str(self.id),
             'userid': self.userId,
             'dsepriction': self.despriction,
-            'adress': self.address,
+            'address': self.address,
             'tags': templist
         }
         return json_pic

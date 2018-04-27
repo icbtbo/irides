@@ -5,13 +5,12 @@ from app import models
 from app.extensions import db
 
 
-def get_pictures():
+def get_pictures(num):
     """Get all pictures"""
-    pictures = models.Picture.query.filter_by().all()
-
+    # pictures = models.Picture.query.filter_by().all()
+    pictures = models.Picture.query.limit(50).offset(int(num))    
     if not pictures:
         return {'no-data': ''}
-
     return {'success': [p.to_json() for p in pictures]}
 
 
@@ -32,7 +31,10 @@ def qiniu_upload_file(source_file, save_file):
     # 要上传的空间
     bucket_name = current_app.config['QINIU_BUCKET_NAME']
     domain_prefix = current_app.config['QINIU_DOMAIN']
-    token = q.upload_token(bucket_name, save_file)
+    policy = {
+        "fsizeLimit": 1024*1024
+    }
+    token = q.upload_token(bucket_name, key=save_file, policy=policy)
     ret, info = put_data(token, save_file, source_file)
     if info.status_code == 200:
         return domain_prefix + save_file

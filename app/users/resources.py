@@ -108,7 +108,7 @@ class UserAPI(Resource):
         if controllers.is_an_available_id(user_id):
             return {'error': 'Invalid user id.'}
         return controllers.delete_user(user_id)
-
+    @jwt_required()
     def get(self):
 
-        pass
+        return controllers.get_user()

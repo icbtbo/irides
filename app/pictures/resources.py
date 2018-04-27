@@ -1,5 +1,5 @@
 import os
-import werkzeug
+import werkzeug,datetime
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from flask import request, current_app, g
@@ -46,8 +46,9 @@ class PicturesAPI(Resource):
     @helpers.standardize_api_response
     def get(self):
         """HTTP GET. Get all pictures"""
+        num = request.args.get('number')
 
-        return controllers.get_pictures()
+        return controllers.get_pictures(num)
 
 
 
@@ -66,7 +67,7 @@ class UploadPicAPI(Resource):
 
     def get(self):
         pass
-    # @jwt_required()
+    @jwt_required()
     @helpers.standardize_api_response
     def post(self):
         """HTTP Post, Upload picture"""

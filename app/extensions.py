@@ -12,5 +12,6 @@ from flask_migrate import Migrate
 migrate = Migrate()
 
 from flask_cors import CORS
-cors=CORS(resources={r"/api/*": {"origins": "http://petstore.swagger.io"}})
+# cors = CORS(resources={r"/api/*": {"origins": "http://petstore.swagger.io"}})
+cors = CORS(resources=r"/api/*")
 

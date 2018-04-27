@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+import os,datetime
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 class Config:
     """
@@ -25,6 +25,7 @@ class Config:
 
     #JWT
     JWT_AUTH_URL_RULE='/api/auth'
+    JWT_EXPIRATION_DELTA = datetime.timedelta(seconds=3600)
 
     # 为了安全,不要把隐私信息直接写到这里会被git记录
     # 可以放到production.py,并用gitignore忽略该文件,或者就像下面这样放到系统环境变量
