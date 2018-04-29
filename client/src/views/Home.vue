@@ -7,6 +7,40 @@
 </template>
 
 <script>
+var ItemFactory = (function () {
+
+  var lastIndex = 0
+
+  function generateRandomItems (count) {
+    var items = [], i, aitems = []
+    $.ajax({
+      async: false,
+      type: 'GET',
+      url: 'http://127.0.0.1:5000/api/pictures?number=' + lastIndex,
+      dataType: 'json',
+      success:function(res){
+        console.log('success');
+        aitems = res.data;
+        // console.log(aitems);
+      },
+      error:function(){
+        console.log('error');
+      }
+    });
+    for (i = 0; i < aitems.length; i++) {
+      items[i] = {
+        src: aitems[i].address,
+        link: 'https://www.baidu.com',
+        info: '一些图片描述文字'
+      }
+    }
+    return items
+  }
+  return {
+    get: generateRandomItems
+  }
+
+})();
 import vueWaterfallEasy from '../components/vue-waterfall-easy.vue'
 export default {
   name: 'app',
@@ -33,7 +67,7 @@ export default {
     }
   },
   created() {
-    this.imgsArr = this.initImgsArr(0, 10)
+    this.imgsArr = ItemFactory.get()
     this.fetchImgsArr = this.initImgsArr(10, 20) // 模拟每次请求的新的图片的数据数据
   },
 }
