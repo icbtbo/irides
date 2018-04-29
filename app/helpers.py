@@ -131,7 +131,6 @@ def standardize_api_response(function):
         return Response(
             response=format,
             mimetype="application/json"
-
         )
 
     return make_response
