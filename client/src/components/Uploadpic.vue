@@ -11,7 +11,7 @@
             <!-- 模态框中注册表单 -->
             <form id="uploadForm">
                 <input id="file" type="file" name="file"/>
-                <button id="upload" type="button"></button>
+                <button id="upload" type="button">上传</button>
             </form>
         </div>
         <div class="modal-footer">

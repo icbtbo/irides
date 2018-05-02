@@ -41,29 +41,6 @@
 </template>
 
 <script>
-// $(document).ready(function(){
-//     $("#submit").click(function(){
-//         var data = {
-//             username: $("#Account").val(),
-//             password: $("#Password").val()
-//         };
-//         console.log(data);
-//         $.ajax({
-//             type: 'POST',
-//             url: 'http://127.0.0.1:5000/api/auth',//后端接口
-//             data: JSON.stringify(data),
-//             dataType: "json",
-//             complete: function (res) {
-//                 if (res.responseJSON.token) {
-//                     alert(res.responseJSON.token);
-//                 }
-//                 else {
-//                     alert("服务端发生错误");
-//                 }
-//             }
-//         });
-//     });
-// });
 $(document).ready(function(){
   $("#LoginForm").validate({
       // debug:true,
@@ -94,9 +71,6 @@ $(document).ready(function(){
           var data = {
               username: $("#Account").val(),
               password: $("#Password").val()
-              // pwdagain: $("#PwdAgain").val()
-              // "username": "admddfgetsd4",
-              // "password": "password4"
           };
           console.log(data);
           $.ajax({
@@ -116,12 +90,6 @@ $(document).ready(function(){
                     alert("服务端发生错误");
                   }
               },
-              // success: function(){
-              //   console.log('success');
-              // },
-              // error: function(){
-              //   console.log('error');
-              // }
           });
       }
   });

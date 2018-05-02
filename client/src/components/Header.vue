@@ -71,22 +71,17 @@ export default {
               url: 'http://127.0.0.1:5000/api/picture?SearchKey=' + $("#input_tag").val(),
               dataType: 'json',
               contentType: "application/json",
-            //   headers:{
-            //     'Authorization':'Bearer' + ' ' + $.cookie('token')
-            //   },
               success:function(res){
                   console.log(res)
                   var items = [];
                   var lastIndex = 0;
                   for(var i=0;i<res.data.length;i++){
                       items[i]={
-                          src:res.data[i].address,
-                          index: lastIndex++,
-                          width: 100 + ~~(Math.random() * 50),
-                          height: 100 + ~~(Math.random() * 50)
+                          src: res.data[i].address,
+                          link: 'https://www.baidu.com',
+                          info: '一些图片描述文字'
                       }
                   }
-                  console.log(items)
                   that.$emit("pics",items);
                 
               },

@@ -172,6 +172,9 @@ export default {
       }
     },
     preload() {
+      if(this.imgsArr.length < this.loadedCount){// 使重置数组时不出错
+        this.loadedCount = 0
+      }
       this.imgsArr.forEach((v, i) => {
         if (i < this.loadedCount) return
         var oImg = new Image()
@@ -220,12 +223,12 @@ export default {
       this.initColsHeightArr()
       this.waterfall()
     })
-    console.log(this.$el.parentNode)
-      console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
+    // console.log(this.$el.parentNode)
+    //   console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
     this.$el.parentNode.addEventListener('scroll', () => {
       if (this.isPreloading) return
       const lastImgHeight = this.imgsArr[this.imgsArr.length - 1].height
-      console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
+      // console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
       if (this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight > this.$el.parentNode.scrollHeight - lastImgHeight) {
         this.$emit('scrollLoadImg')
       }

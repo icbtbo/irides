@@ -1,9 +1,16 @@
 <template lang="pug">
-#app
-  vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
-    template( scope="props")
-      p.some-info 第{{props.index+1}}张图片
-      p.some-info {{props.value.info}}
+<div id="main">
+  <Header @pics="showpics"/>
+  <LoginModel />
+  <RegModel />
+  <Uploadpic />
+  #app
+    vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
+      template( scope="props")
+        p.some-info 第{{props.index+1}}张图片
+        p.some-info {{props.value.info}}
+        //- button haha
+</div>
 </template>
 
 <script>
@@ -16,7 +23,7 @@ var ItemFactory = (function () {
     $.ajax({
       async: false,
       type: 'GET',
-      url: 'http://127.0.0.1:5000/api/pictures?number=' + lastIndex,
+      url: 'http://127.0.0.1:5000/api/pictures?number=' + count,
       dataType: 'json',
       success:function(res){
         console.log('success');
@@ -42,33 +49,33 @@ var ItemFactory = (function () {
 
 })();
 import vueWaterfallEasy from '../components/vue-waterfall-easy.vue'
+import LoginModel from '../components/LoginModel.vue'
+import RegModel from '../components/RegModel.vue'
+import Uploadpic from '../components/Uploadpic.vue'
+import Header from '../components/Header.vue'
 export default {
   name: 'app',
   data() {
     return {
-      imgsArr: [],
-      fetchImgsArr: []
+      imgsArr: []
     }
   },
   components: {
-    vueWaterfallEasy
+    vueWaterfallEasy,Header,LoginModel,RegModel,Uploadpic
   },
   methods: {
-    // 假数据
-    initImgsArr(n, m) { //num 图片数量
-      var arr = []
-      for (var i = n; i < m; i++) {
-        arr.push({ src: `./static/img/${i + 1}.jpg`, link: 'https://www.baidu.com', info: '一些图片描述文字' })
-      }
-      return arr
-    },
+    showpics: function(data){
+      if(data.length == 0)
+        alert('搜索不到相关图片！')
+      this.imgsArr = data;
+    },     
     fetchImgsData() {
-      this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)
+      this.imgsArr = this.imgsArr.concat(ItemFactory.get(this.imgsArr.length))
+      // this.imgsArr.push.apply(this.imgsArr, this.fetchImgsArr)
     }
   },
   created() {
-    this.imgsArr = ItemFactory.get()
-    this.fetchImgsArr = this.initImgsArr(10, 20) // 模拟每次请求的新的图片的数据数据
+    this.imgsArr = ItemFactory.get(0)
   },
 }
 </script>
@@ -81,7 +88,8 @@ export default {
 html,
 body,
 #app {
-  height: 100%;
+  top: 50px;
+  // height: 100%;
 }
 #app {
   font-family: microsoft yahei;
