@@ -41,7 +41,15 @@
 </template>
 
 <script>
+  // $("#LoginModal").on('show.bs.modal',function(event){
+  //   var button = $(event.relatedTarget)
+  //   console.log('sdsd')
+  // })
 $(document).ready(function(){
+  //   $("#LoginModal").on('show.bs.modal',function(event){
+  //   var button = $(event.relatedTarget)
+  //   console.log(button.data('picid'))
+  // })
   $("#LoginForm").validate({
       // debug:true,
       rules:{

@@ -4,12 +4,13 @@
   <LoginModel />
   <RegModel />
   <Uploadpic />
+  <CommentMod />
   #app
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
       template( scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
-        //- button haha
+        //- button.comment(data-toggle="modal" data-target="#LoginModal" :data-picid="props.index+1") 评论
 </div>
 </template>
 
@@ -53,6 +54,7 @@ import LoginModel from '../components/LoginModel.vue'
 import RegModel from '../components/RegModel.vue'
 import Uploadpic from '../components/Uploadpic.vue'
 import Header from '../components/Header.vue'
+import CommentMod from '../components/CommentMod.vue'
 export default {
   name: 'app',
   data() {
@@ -61,7 +63,7 @@ export default {
     }
   },
   components: {
-    vueWaterfallEasy,Header,LoginModel,RegModel,Uploadpic
+    vueWaterfallEasy,Header,LoginModel,RegModel,Uploadpic,CommentMod
   },
   methods: {
     showpics: function(data){
@@ -97,6 +99,10 @@ body,
   .some-info {
     line-height: 1.6;
     text-align: center;
+  }
+  .comment{
+    text-align: center;
+    width: 100%;
   }
 }
 </style>

@@ -74,7 +74,6 @@
 )
   a.img-box(
     v-for="(v,i) in imgsArrC",
-    :href="v.link",
     :style="{padding:gap/2+'px',width: isMobile ? '' : colWidth+'px'}"
   )
     .img-inner-box
@@ -82,6 +81,8 @@
         img(:src="v.src")
       .img-info
         slot(:index="i",:value="v")
+      .button
+        button.comment(data-toggle="modal" data-target="#CommentModal" :data-picid="i+1") 评论
 
   .loading(v-if="isPreloadingC",:class="{'first-loading':isFirstTIme}")
     div.double-bounce1
