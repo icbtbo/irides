@@ -25,7 +25,9 @@ def is_an_available_id(user_id):
 
 def get_user():
     username = current_user.username
+    userid = current_user.id
     return jsonify({
+        'userid': userid,
         'username':username
     })
 

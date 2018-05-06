@@ -52,10 +52,11 @@ def register_blueprints(app):
     :returns: None
 
     """
-    from . import users, pictures,main
+    from . import users, pictures,main,comments
     app.register_blueprint(users.blueprint)
     app.register_blueprint(pictures.blueprint)
     app.register_blueprint(main.blueprint)
+    app.register_blueprint(comments.blueprint)
 
 def append_swagger_doc(app):
     """

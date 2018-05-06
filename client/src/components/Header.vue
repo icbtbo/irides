@@ -62,6 +62,8 @@ export default {
           this.Islogin1 = false;
           this.Islogin2 = false;
           $.cookie('token', null);
+          sessionStorage.removeItem("username");
+          sessionStorage.removeItem("userid");
       },
       sendmsgtohome:function(){
           var that = this;
@@ -77,6 +79,7 @@ export default {
                   var lastIndex = 0;
                   for(var i=0;i<res.data.length;i++){
                       items[i]={
+                          picid: res.data[i].id,
                           src: res.data[i].address,
                           link: 'https://www.baidu.com',
                           info: '一些图片描述文字'
@@ -94,7 +97,7 @@ export default {
   mounted(){
         var that = this;
         // 判断是否已登录从而确定是否显示用户名
-        if($.cookie('token') != null){
+        if($.cookie('token') != "null"){
             $.ajax({
                 async: false,
                 type: 'GET',
@@ -108,6 +111,8 @@ export default {
                     console.log('success');
                     // console.log(res);
                     that.username = res.username;
+                    sessionStorage.setItem("username",res.username);
+                    sessionStorage.setItem("userid",res.userid);
                     that.Islogin1 = true;
                     that.Islogin2 = true;
                 },

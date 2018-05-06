@@ -82,7 +82,7 @@
       .img-info
         slot(:index="i",:value="v")
       .button
-        button.comment(data-toggle="modal" data-target="#CommentModal" :data-picid="i+1") 评论
+        button.comment(data-toggle="modal" data-target="#CommentModal" :data-picid="v.picid") 评论
 
   .loading(v-if="isPreloadingC",:class="{'first-loading':isFirstTIme}")
     div.double-bounce1

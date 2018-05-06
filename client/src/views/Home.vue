@@ -37,6 +37,7 @@ var ItemFactory = (function () {
     });
     for (i = 0; i < aitems.length; i++) {
       items[i] = {
+        picid: aitems[i].id,
         src: aitems[i].address,
         link: 'https://www.baidu.com',
         info: '一些图片描述文字'

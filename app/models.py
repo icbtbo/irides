@@ -42,12 +42,13 @@ relation = db.Table('tag_pic_relation',
 class Picture(db.Model):
     __tablename__ = 'pictures'
     id = db.Column(db.Integer, primary_key=True)
-    despriction = db.Column(db.String(5000))
+    despriction = db.Column(db.String(500))
     address = db.Column(db.String(200), unique=True)
     userId = db.Column(db.Integer, db.ForeignKey('user.id'))
     tags = db.relationship(
         'Tag', secondary=relation, backref=db.backref('pictures', lazy='dynamic'))
-
+    comments = db.relationship(
+        'Comment', backref='pictures', lazy='dynamic')
     def to_json(self):
         templist = []
         for tag in self.tags:
@@ -74,6 +75,14 @@ class Tag(db.Model):
         }
         return json_tags
 
+class Comment(db.Model):
+    __tablename__ = 'comment'
+    id = db.Column(db.Integer, primary_key=True)
+    picId = db.Column(db.Integer,db.ForeignKey('pictures.id'))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id'))
+    content = db.Column(db.String(500))
+    time = db.Column(db.String(64))
+    reply_to = db.Column(db.Integer, default=0)
 
 class InitDataGenerator:
     @property

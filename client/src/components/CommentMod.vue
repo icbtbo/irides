@@ -43,6 +43,9 @@ export default {
             read:50,
             content: ""
         },
+        commentId:-1,
+        picId:-1,
+        lastindex:-1,
         comment: []   //评论内容
       }
     },
@@ -59,34 +62,107 @@ export default {
         },
         //添加评论
         addComment: function(data) {
+            if($.cookie('token') != "null"){
+                console.log($.cookie('token'))
+                            var postdata;
             if(this.type == 0) {
                 this.comment.push({
-                    name: 'session',
+                    id: this.lastindex+1,
+                    name: sessionStorage.getItem('username'),
                     time: this.getTime(),
                     content: data,
                     reply: []
                 });
+                this.lastindex += 1;
                 //服务器端,待定
+                postdata = {
+                    userId: sessionStorage.getItem('userid'),
+                    picId: this.picId,
+                    content: data,
+                    time: this.getTime(),
+                    reply_to:0
+                }
             }else if(this.type == 1){
                 this.comment[this.chosedIndex].reply.push({
-                    responder: 'session',
-                    reviewers:this.comment[this.chosedIndex].name,
+                    id: this.lastindex+1,
+                    responder: sessionStorage.getItem('username'),
+                    reviewers:this.oldComment,
                     time: this.getTime(),
                     content: data
                 });
                 this.type = 0;
+                this.lastindex += 1;
+                postdata = {
+                    userId: sessionStorage.getItem('userid'),
+                    picId: this.picId,
+                    content: data,
+                    time: this.getTime(),
+                    reply_to: this.commentId
+                }
+            }
+            $.ajax({
+                type:'POST',
+                url:'http://127.0.0.1:5000/api/comment',
+                contentType:"application/json",
+                data:JSON.stringify(postdata),
+                dataType:"json",
+                headers:{
+                    'Authorization':'Bearer' + ' ' + $.cookie('token')
+                },
+                success: function(){
+                    console.log('post comment successfully!')
+                },
+                error: function(){
+                    console.log('error!')
+                }
+            })
+            }
+            else{
+                alert('请先登录！')
             }
         },
         //监听到了点击了别人的评论
-        changCommmer: function(name,index) {
+        changCommmer: function(name,id,index) {
             this.oldComment = name;
             this.chosedIndex = index;
+            this.commentId = id;
             this.type = 1;
         },
         //监听到了取消评论
         canelCommit: function() {
             this.type = 0;
         }
+    },
+    mounted(){
+        var that = this;
+        $("#CommentModal").on('show.bs.modal',function(event){
+            // if($.cookie('token')!=null){
+            //     console.log($.cookie('token'))
+            // }
+            // else{
+            //     console.log('2')
+            // }
+            var button = $(event.relatedTarget) // 获取图片的索引
+            that.picId = button.data('picid')
+            $.ajax({
+                type:'GET',
+                async: false,
+                url:'http://127.0.0.1:5000/api/comment?picId=' + that.picId,
+                contentType:"application/json",
+                // headers:{
+                //     'Authorization':'Bearer' + ' ' + $.cookie('token')
+                // },
+                dataType:"json",
+                success: function(res){
+                    that.comment = res.comments
+                    that.lastindex = res.lastcomment_id
+                    console.log('get comment successfully!')
+                },
+                error: function(){
+                    console.log('error!')
+                }
+            })
+        })
     }
 }
 </script>

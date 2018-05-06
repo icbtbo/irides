@@ -5,11 +5,11 @@
         <div v-else>
             <div class="comment" v-for="(item,index) in comment" v-bind:index="index" >
                 <b>{{item.name}}<span>{{item.time}}</span></b>
-                <p @click="changeCommenter(item.name,index)">{{item.content}}</p>
+                <p @click="changeCommenter(item.name,item.id,index)">{{item.content}}</p>
                 <div v-if="item.reply.length > 0">
                     <div class="reply" v-for="reply in item.reply">
                         <b>{{reply.responder}}&nbsp;&nbsp;回复&nbsp;&nbsp;{{reply.reviewers}}<span>{{reply.time}}</span></b>
-                        <p @click="changeCommenter(reply.responder,index)">{{reply.content}}</p>
+                        <p @click="changeCommenter(reply.responder,reply.id,index)">{{reply.content}}</p>
                     </div>
                 </div>
             </div>
@@ -22,8 +22,8 @@ export default {
   name:'comment-content',
   props:['comment'],
   methods: {
-    changeCommenter: function(name,index) {
-        this.$emit("change",name,index);
+    changeCommenter: function(name,id,index) {
+        this.$emit("change",name,id,index);
     }
   }
 }
