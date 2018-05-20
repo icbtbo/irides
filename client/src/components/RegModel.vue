@@ -11,15 +11,15 @@
             <!-- 模态框中注册表单 -->
             <form id="RegForm" action="" >
                 <div class="form-group">
-                  <label for="RegAccount">Account</label>
+                  <label for="RegAccount">账号</label>
                   <input type="text" class="form-control" id="RegAccount" name="RegAccount"  placeholder="账号">
                 </div>
                 <div class="form-group">
-                  <label for="RegPassword">Password</label>
+                  <label for="RegPassword">密码</label>
                   <input type="password" class="form-control" id="RegPassword" name="RegPassword" placeholder="密码">
                 </div>
                 <div class="form-group">
-                  <label for="ConfirmPwd">PasswordAgain</label>
+                  <label for="ConfirmPwd">再次输入密码</label>
                   <input type="password" class="form-control" id="ConfirmPwd" name="ConfirmPwd" placeholder="确认密码">
                 </div>
                 <!-- <div class="form-group">

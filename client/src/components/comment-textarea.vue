@@ -1,8 +1,12 @@
 <template>
   <div class="commentBox">
-		<h3>发表评论</h3>
-		<b v-if="type">你回复&nbsp;{{name}}</b>
-		<textarea name="" value="请填写评论内容" v-model="commentText"></textarea>
+	    <div class="title">
+			<h3>发表评论</h3>
+	    </div>
+		<div class="form-group">
+			<label v-if="type" for="comment_text">你回复&nbsp;{{name}}</label>
+			<textarea id="comment_text" value="请填写评论内容" v-model="commentText" class="form-control"></textarea>
+		</div>
 		<button class="btn" @click="addComment">发表</button>
 		<button class="btn" @click="canelComment">取消</button>
 	</div>
@@ -27,5 +31,15 @@ export default {
 }
 </script>
 <style>
-
+.commentBox h3{
+	position: relative;
+	font-size: 15px;
+	top: 7px;
+	left: 7px;
+}
+.title{
+	width: 100%;
+	height: 29px;
+	background-color: #DDDDDD;
+}
 </style>

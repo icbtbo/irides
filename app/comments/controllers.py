@@ -17,13 +17,13 @@ def post_comments(userid,picid,content,time,reply_to):
     return {'created': 'Post the comment .'}
 
 def get_comments(picId):
-    comments = models.Comment.query.filter(models.Comment.picId==picId, models.Comment.reply_to==0).all()
-    replys = models.Comment.query.filter(models.Comment.picId==picId, models.Comment.reply_to!=0).all()
+    comments = models.Comment.query.filter(models.Comment.picId==picId, models.Comment.reply_to==0).all() # 获取所有原评论
+    replys = models.Comment.query.filter(models.Comment.picId==picId, models.Comment.reply_to!=0).all() # 获取所有评论评论的评论
     lastcomment_id = models.Comment.query.order_by(models.Comment.id.desc()).first().id
-    commentslist = []
+    commentslist = [] # 用来存放最终结果
     index = 0
     for comment in comments:
-        parentids = []
+        parentids = [] # 存放改评论及其下所有评论的commentid
         parentids.append(comment.id)
         username = get_username(comment.userId),
         commentslist.append({

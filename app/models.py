@@ -52,7 +52,7 @@ class Picture(db.Model):
     def to_json(self):
         templist = []
         for tag in self.tags:
-            templist.append(tag.to_json())
+            templist.append(tag.tag)
         json_pic = {
             'id': str(self.id),
             'userid': self.userId,

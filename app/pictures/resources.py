@@ -6,7 +6,7 @@ from flask import request, current_app, g
 from werkzeug import secure_filename
 from app import helpers, extensions
 from . import controllers
-from ..models import  Picture
+from ..models import  Picture,Tag
 from ..extensions import db
 
 
@@ -24,6 +24,10 @@ def post_put_parser():
     parse = reqparse.RequestParser()
     parse.add_argument(
         'file', type=werkzeug.datastructures.FileStorage, location='files', required=True)
+    parse.add_argument(
+        'desc', type=str, location='form', required=True)
+    parse.add_argument(
+        'tags', location='form', required=True)
     return parse
 
 class PicturesAPI(Resource):
@@ -73,16 +77,27 @@ class UploadPicAPI(Resource):
         """HTTP Post, Upload picture"""
         parse = post_put_parser()
         args = parse.parse_args()        
-        file = args['file']     
+        file = args['file']    
+        desc = args['desc'] 
+        tags = args['tags'].split(' ')
+        print(tags)
         filestream = file.read()
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             url = controllers.qiniu_upload_file(filestream, filename)
             if url != None:
-                db.session.add(Picture(
-                    address=url
-                    # userId=g.user.id
-                ))
+                pic = Picture(address=url,despriction=desc)
+                tagslist = []
+                for tag in tags:
+                    exist = Tag.query.filter_by(tag=tag).first()
+                    if exist:
+                        tagslist.append(exist)
+                    else:
+                        tagitem = Tag(tag=tag)
+                        tagslist.append(tagitem)
+                        db.session.add(tagitem)
+                pic.tags = tagslist
+                db.session.add(pic)
         return {'success': 'You have uploaded a picture!'}
 
 

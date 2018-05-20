@@ -9,6 +9,7 @@
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
       template( scope="props")
         p.some-info 第{{props.index+1}}张图片
+        p.some-info {{props.value.tags}}
         p.some-info {{props.value.info}}
         //- button.comment(data-toggle="modal" data-target="#LoginModal" :data-picid="props.index+1") 评论
 </div>
@@ -29,7 +30,7 @@ var ItemFactory = (function () {
       success:function(res){
         console.log('success');
         aitems = res.data;
-        // console.log(aitems);
+        console.log(aitems);
       },
       error:function(){
         console.log('error');
@@ -39,9 +40,10 @@ var ItemFactory = (function () {
       items[i] = {
         picid: aitems[i].id,
         src: aitems[i].address,
-        link: 'https://www.baidu.com',
-        info: '一些图片描述文字'
+        tags: aitems[i].tags.join(' '),
+        info: aitems[i].dsepriction
       }
+      
     }
     return items
   }

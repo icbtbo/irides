@@ -23,6 +23,9 @@
         background: #fff;
         padding: .6em;
       }
+      .button{
+        opacity: 0.4;
+      }
     }
   }
   .loading {

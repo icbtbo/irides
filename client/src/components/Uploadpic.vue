@@ -5,12 +5,23 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">注册</h4>
+          <h4 class="modal-title" id="myModalLabel">上传图片</h4>
         </div>
         <div class="modal-body">
             <!-- 模态框中注册表单 -->
             <form id="uploadForm">
-                <input id="file" type="file" name="file"/>
+                <div class="form-group">
+                    <label for="file">选择图片</label>
+                    <input id="file" type="file" name="file" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="tags">图片标签</label>
+                    <input id='tags' placeholder="图片标签" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="desc">图片描述</label>
+                    <input id="desc" placeholder="图片描述" class="form-control"/>
+                </div>
                 <button id="upload" type="button">上传</button>
             </form>
         </div>
@@ -26,8 +37,11 @@
 <script>
 $(document).ready(function(){
     $("#upload").click(function(){
+        // var tags = $('#tags').val().split(" ");
         var formData = new FormData();
         formData.append('file', $('#file')[0].files[0]);
+        formData.append('tags', $('#tags').val());
+        formData.append('desc', $('#desc').val());
         $.ajax({
             type: 'POST',
             url: 'http://127.0.0.1:5000/api/upload_pic',//后端接口
@@ -43,9 +57,7 @@ $(document).ready(function(){
             console.log('success');
             $("#UploadpicModal").modal("hide")
         }).fail(function(res){
-            alert('请先登录！');
             console.log('fail');
-            console.log($.cookie('token'))
         });
     });
 });

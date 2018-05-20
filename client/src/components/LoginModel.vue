@@ -11,11 +11,11 @@
             <!-- 模态框中登录表单 -->
             <form id="LoginForm" action="" method="post">
                 <div class="form-group">
-                  <label for="Account">Account</label>
+                  <label for="Account">账号</label>
                   <input type="text" class="form-control" id="Account" name="Account" placeholder="账号">
                 </div>
                 <div class="form-group">
-                  <label for="Password">Password</label>
+                  <label for="Password">密码</label>
                   <input type="password" class="form-control" id="Password" name="Password" placeholder="密码">
                 </div>
                 <!-- <div class="form-group">

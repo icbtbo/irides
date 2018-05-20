@@ -22,7 +22,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <!-- <li><a href="#">login</a></li> -->
-                        <li @click="logout"><a href="#">logout</a></li>
+                        <li @click="logout"><a href="#">登出</a></li>
                     </ul>
                 </li>
                 <li v-if="Islogin1 == false"><a data-toggle="modal" href="#LoginModal">登陆</a></li>

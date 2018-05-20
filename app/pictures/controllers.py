@@ -8,7 +8,7 @@ from app.extensions import db
 def get_pictures(num):
     """Get all pictures"""
     # pictures = models.Picture.query.filter_by().all()
-    pictures = models.Picture.query.limit(50).offset(int(num))    
+    pictures = models.Picture.query.order_by(models.Picture.id.desc()).limit(50).offset(int(num))    
     if not pictures:
         return {'no-data': ''}
     return {'success': [p.to_json() for p in pictures]}

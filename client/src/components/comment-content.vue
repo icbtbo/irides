@@ -1,6 +1,8 @@
 <template>
   <div class="commentBox">
-        <h3>评论</h3>
+        <div class="title">
+			<h3>所有评论</h3>
+	    </div>
         <p v-if="comment.length==0">暂无评论，我来发表第一篇评论！</p>
         <div v-else>
             <div class="comment" v-for="(item,index) in comment" v-bind:index="index" >
@@ -28,3 +30,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.reply{
+    position: relative;
+    left: 45px;
+}
+.comment b, .reply b{
+    color: darkgreen;
+}
+.comment span, .reply span{
+    color:black;
+}
+</style>
