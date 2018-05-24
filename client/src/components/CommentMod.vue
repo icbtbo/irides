@@ -56,66 +56,70 @@ export default {
             var year = now.getFullYear();
             var month = now.getMonth()+1;
             var day = now.getDate();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
             month.length < 2 ?  "0" + month : month;
             day.length < 2 ?  "0" + day : day;
-            return year+"-"+month+"-"+day;
+            hour.length < 2 ?  "0" + hour : hour;
+            minute.length < 2 ?  "0" + minute : minute;
+            return year+"-"+month+"-"+day+" "+hour+":"+minute;
         },
         //添加评论
         addComment: function(data) {
             if($.cookie('token') != "null"){
                 console.log($.cookie('token'))
-                            var postdata;
-            if(this.type == 0) {
-                this.comment.push({
-                    id: this.lastindex+1,
-                    name: sessionStorage.getItem('username'),
-                    time: this.getTime(),
-                    content: data,
-                    reply: []
-                });
-                this.lastindex += 1;
-                //服务器端,待定
-                postdata = {
-                    userId: sessionStorage.getItem('userid'),
-                    picId: this.picId,
-                    content: data,
-                    time: this.getTime(),
-                    reply_to:0
+                var postdata;
+                if(this.type == 0) {
+                    this.comment.push({
+                        id: this.lastindex+1,
+                        name: sessionStorage.getItem('username'),
+                        time: this.getTime(),
+                        content: data,
+                        reply: []
+                    });
+                    this.lastindex += 1;
+                    //服务器端,待定
+                    postdata = {
+                        userId: sessionStorage.getItem('userid'),
+                        picId: this.picId,
+                        content: data,
+                        time: this.getTime(),
+                        reply_to:0
+                    }
+                }else if(this.type == 1){
+                    this.comment[this.chosedIndex].reply.push({
+                        id: this.lastindex+1,
+                        responder: sessionStorage.getItem('username'),
+                        reviewers:this.oldComment,
+                        time: this.getTime(),
+                        content: data
+                    });
+                    this.type = 0;
+                    this.lastindex += 1;
+                    postdata = {
+                        userId: sessionStorage.getItem('userid'),
+                        picId: this.picId,
+                        content: data,
+                        time: this.getTime(),
+                        reply_to: this.commentId
+                    }
                 }
-            }else if(this.type == 1){
-                this.comment[this.chosedIndex].reply.push({
-                    id: this.lastindex+1,
-                    responder: sessionStorage.getItem('username'),
-                    reviewers:this.oldComment,
-                    time: this.getTime(),
-                    content: data
-                });
-                this.type = 0;
-                this.lastindex += 1;
-                postdata = {
-                    userId: sessionStorage.getItem('userid'),
-                    picId: this.picId,
-                    content: data,
-                    time: this.getTime(),
-                    reply_to: this.commentId
-                }
-            }
-            $.ajax({
-                type:'POST',
-                url:'http://127.0.0.1:5000/api/comment',
-                contentType:"application/json",
-                data:JSON.stringify(postdata),
-                dataType:"json",
-                headers:{
-                    'Authorization':'Bearer' + ' ' + $.cookie('token')
-                },
-                success: function(){
-                    console.log('post comment successfully!')
-                },
-                error: function(){
-                    console.log('error!')
-                }
-            })
+                $.ajax({
+                    type:'POST',
+                    url:'http://127.0.0.1:5000/api/comment',
+                    contentType:"application/json",
+                    data:JSON.stringify(postdata),
+                    dataType:"json",
+                    headers:{
+                        'Authorization':'Bearer' + ' ' + $.cookie('token')
+                    },
+                    success: function(){
+                        console.log('post comment successfully!')
+                    },
+                    error: function(){
+                        console.log('error!')
+                    }
+                })
             }
             else{
                 alert('请先登录！')
@@ -136,12 +140,6 @@ export default {
     mounted(){
         var that = this;
         $("#CommentModal").on('show.bs.modal',function(event){
-            // if($.cookie('token')!=null){
-            //     console.log($.cookie('token'))
-            // }
-            // else{
-            //     console.log('2')
-            // }
             var button = $(event.relatedTarget) // 获取图片的索引
             that.picId = button.data('picid')
             $.ajax({

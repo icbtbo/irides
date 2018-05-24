@@ -1,16 +1,16 @@
 <template>
   <div class="commentBox">
-        <div class="title">
+        <div class="title1">
 			<h3>所有评论</h3>
 	    </div>
         <p v-if="comment.length==0">暂无评论，我来发表第一篇评论！</p>
         <div v-else>
             <div class="comment" v-for="(item,index) in comment" v-bind:index="index" >
-                <b>{{item.name}}<span>{{item.time}}</span></b>
+                <b>{{item.name}}<span>&nbsp;&nbsp;{{item.time}}</span></b>
                 <p @click="changeCommenter(item.name,item.id,index)">{{item.content}}</p>
                 <div v-if="item.reply.length > 0">
                     <div class="reply" v-for="reply in item.reply">
-                        <b>{{reply.responder}}&nbsp;&nbsp;回复&nbsp;&nbsp;{{reply.reviewers}}<span>{{reply.time}}</span></b>
+                        <b>{{reply.responder}}&nbsp;&nbsp;回复&nbsp;&nbsp;{{reply.reviewers}}<span>&nbsp;&nbsp;{{reply.time}}</span></b>
                         <p @click="changeCommenter(reply.responder,reply.id,index)">{{reply.content}}</p>
                     </div>
                 </div>

@@ -8,9 +8,9 @@
     		<ul class="nav navbar-nav">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input id="input_tag" type="text" class="form-control" placeholder="Search">
+                        <input id="input_tag" type="text" class="form-control" placeholder="请输入所要找的图片的类型">
                     </div>
-                    <button v-on:click="sendmsgtohome"  type="submit" class="btn btn-default">Submit</button>
+                    <button v-on:click="sendmsgtohome"  type="submit" class="btn btn-default">搜索</button>
                 </form>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -74,15 +74,15 @@ export default {
               dataType: 'json',
               contentType: "application/json",
               success:function(res){
-                  console.log(res)
+                  console.log('success search!')
                   var items = [];
                   var lastIndex = 0;
                   for(var i=0;i<res.data.length;i++){
                       items[i]={
                           picid: res.data[i].id,
                           src: res.data[i].address,
-                          link: 'https://www.baidu.com',
-                          info: '一些图片描述文字'
+                          tags: res.data[i].tags.join(' '),
+                          info: res.data[i].dsepriction
                       }
                   }
                   that.$emit("pics",items);
@@ -121,9 +121,9 @@ export default {
                 }
             });
         }
-        else{
-            alert('token已失效！请重新登录！');
-        }
+        // else{
+        //     alert('token已失效！请重新登录！');
+        // }
         // 点击 irides 图标返回主页
         $(document).ready(function(){
             $("#homepage").click(function(){

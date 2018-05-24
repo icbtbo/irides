@@ -41,15 +41,8 @@
 </template>
 
 <script>
-  // $("#LoginModal").on('show.bs.modal',function(event){
-  //   var button = $(event.relatedTarget)
-  //   console.log('sdsd')
-  // })
+
 $(document).ready(function(){
-  //   $("#LoginModal").on('show.bs.modal',function(event){
-  //   var button = $(event.relatedTarget)
-  //   console.log(button.data('picid'))
-  // })
   $("#LoginForm").validate({
       // debug:true,
       rules:{
@@ -80,7 +73,6 @@ $(document).ready(function(){
               username: $("#Account").val(),
               password: $("#Password").val()
           };
-          console.log(data);
           $.ajax({
               type: 'POST',
               url: 'http://127.0.0.1:5000/api/auth',//后端接口
@@ -89,7 +81,6 @@ $(document).ready(function(){
               dataType: "json",
               complete: function (res) {
                   if (res.responseJSON.token) {
-                      console.log(res);
                       $.cookie('token',res.responseJSON.token,{path:'/'})
                       $("#LoginModal").modal("hide")
                       location.reload(true); 

@@ -1,6 +1,6 @@
 <template>
   <div class="commentBox">
-	    <div class="title">
+	    <div class="title1">
 			<h3>发表评论</h3>
 	    </div>
 		<div class="form-group">
@@ -37,7 +37,7 @@ export default {
 	top: 7px;
 	left: 7px;
 }
-.title{
+.title1{
 	width: 100%;
 	height: 29px;
 	background-color: #DDDDDD;

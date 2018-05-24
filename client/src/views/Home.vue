@@ -7,7 +7,7 @@
   <CommentMod />
   #app
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
-      template( scope="props")
+      template( slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.tags}}
         p.some-info {{props.value.info}}
@@ -30,7 +30,6 @@ var ItemFactory = (function () {
       success:function(res){
         console.log('success');
         aitems = res.data;
-        console.log(aitems);
       },
       error:function(){
         console.log('error');
@@ -81,7 +80,13 @@ export default {
   },
   created() {
     this.imgsArr = ItemFactory.get(0)
+    // console.log(sdadadada)
   },
+  mounted(){
+    if($.cookie('token') == null){
+      $.cookie('token', null);
+    }
+  }
 }
 </script>
 

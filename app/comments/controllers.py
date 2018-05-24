@@ -28,7 +28,7 @@ def get_comments(picId):
         username = get_username(comment.userId),
         commentslist.append({
             'id': comment.id,
-            'name': username,
+            'name': username[0],  
             'time': comment.time,
             'content': comment.content,
             'reply': []
@@ -40,7 +40,7 @@ def get_comments(picId):
                 commentslist[index]['reply'].append({
                     'id': reply.id,
                     'responder': responder_name,
-                    'reviewers': username,
+                    'reviewers': username[0],
                     'time': reply.time,
                     'content': reply.content
                 })
@@ -55,7 +55,7 @@ def get_comments(picId):
     #     'comments': 2
     # })
 
-def get_username(userid):
-    name = models.User.query.get(userid).username
-    print(type(name))
+def get_username(userid):  # 经测试，返回的是数组。。。。
+    name = models.User.query.filter_by(id=userid).first().username
+    print(name)
     return name
